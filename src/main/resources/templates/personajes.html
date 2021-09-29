@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+
+    </head>
+    <body>
+        <h1>Personajes</h1>
+        <ol>
+            <li th:each="character:${personaje}">
+                <div>
+                    <span th:text="${character.Nombre}">text</span>
+                     <img th:src="@{characters/{id}(id=character.id)}" alt="alt"/>
+                </div>
+                
+            </li>
+           
+        </ol>
+        <h2>Crear un personaje</h2>
+        <form th:action="@{/character}" method="POST" enctype="multipart/form-data"></form>
+        <label for="nombre">Nombre:</label><br>
+        <input th:type="text" name="nombre"><br>
+                <label for="edad">Edad:</label><br>
+        <input th:type="text" name="edad"><br>
+                <label for="peso">Peso:</label><br>
+        <input th:type="text" name="peso"><br>
+                <label for="historia">Historia:</label><br>
+        <input th:type="text" name="historia"> <br>
+                <label for="image">Imagen:</label><br>
+                    <input type="file" name="imagen"><br> <br>
+                <input type="submit" name="Send!">
+       
+           
+    </body>
+</html>
