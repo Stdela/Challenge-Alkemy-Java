@@ -1,12 +1,9 @@
-package com.AlkemyChallenge.AlkemyJavaChallenge.Clases;
 
+package com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.updateClasses;
+
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Pelicula;
 import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
+import java.util.List;  
 import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,24 +14,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  *
  * @author delam
  */
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Personaje extends AbstractPersistable<Long> {
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
+public class updatePersonaje extends AbstractPersistable<Long> {
     private String imagen;
     private String nombre;
     private Integer edad;
     private Double peso;
     private String historia;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     List<Pelicula> pelicula = new ArrayList<>();
-
-   
-    
-    
-
 }

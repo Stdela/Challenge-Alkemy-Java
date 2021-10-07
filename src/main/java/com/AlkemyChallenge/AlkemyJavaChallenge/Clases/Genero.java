@@ -28,7 +28,7 @@ public class Genero extends AbstractPersistable<Long> {
 private String nombre;
 @Lob
  @Basic(fetch = FetchType.LAZY)
-private byte[] imagen;
+private String imagen;
 @OneToMany
 private List<Pelicula> pelicula= new ArrayList<>();
 }
