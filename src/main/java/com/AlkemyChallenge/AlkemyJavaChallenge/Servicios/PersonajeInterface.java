@@ -5,19 +5,20 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Servicios;
 
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Personaje;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.PersonajeRequest;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.updateClasses.updatePersonaje;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Personaje;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.PersonajeRequest;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.updateModels.updatePersonaje;
 import java.io.IOException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author delam
  */
 public interface PersonajeInterface {
+
     Personaje crearPersonaje(PersonajeRequest personajeReq) throws IOException;
+
     Personaje actualizarPersonaje(@PathVariable Long id, @RequestBody updatePersonaje updatePersonaje) throws IOException;
 }

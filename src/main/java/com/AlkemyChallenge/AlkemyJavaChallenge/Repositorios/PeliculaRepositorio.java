@@ -5,8 +5,8 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Repositorios;
 
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Pelicula;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.dtoClasses.PeliculaDTO;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Pelicula;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.dtoModels.PeliculaDTO;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,12 +21,9 @@ public interface PeliculaRepositorio extends JpaRepository<Pelicula, Long> {
     @Query("SELECT p FROM Pelicula p WHERE p.titulo =:name")
     List<Pelicula> encontrarPorNombre(String name);
 
-
-    
-//    @Query("SELECT p from Pelicula p INNER JOIN Genero g on p.id = g.pelicula.id AND g.id = :idGenero" )
-//    List<Pelicula> peliculaGenero(Long idGenero);
-    
-    @Query("SELECT new com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.dtoClasses.PeliculaDTO(p.imagen, p.titulo, p.fechaCreacion) FROM Pelicula p")
+    @Query("SELECT p from Pelicula p where p.genero.id =:genre" )
+    List<Pelicula> peliculaGenero(Long genre);
+    @Query("SELECT new com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.dtoModels.PeliculaDTO(p.imagen, p.titulo, p.fechaCreacion) FROM Pelicula p")
     List<PeliculaDTO> listarPelicula();
 
 }

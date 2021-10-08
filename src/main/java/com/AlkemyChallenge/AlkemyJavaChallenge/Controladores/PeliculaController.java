@@ -5,10 +5,10 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Controladores;
 
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Pelicula;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Personaje;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.PeliculaRequest;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.updateClasses.updatePelicula;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Pelicula;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Personaje;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.PeliculaRequest;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.updateModels.updatePelicula;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Repositorios.PeliculaRepositorio;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Repositorios.PersonajeRepositorio;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Servicios.PeliculaServicio;
@@ -16,10 +16,9 @@ import com.AlkemyChallenge.AlkemyJavaChallenge.Servicios.PeliculaServicio;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +47,7 @@ public class PeliculaController {
     @GetMapping
     public List getPeliculas(@RequestParam(required = false) String order,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Long idGenero) throws IOException {
+            @RequestParam(required = false) Long genre) throws IOException {
         if (order != null) {
             if (order.equals("ASC")) {
                 pelicularep.findAll(Sort.by("fechaCreacion").ascending());
@@ -61,14 +60,13 @@ public class PeliculaController {
         } else if (name != null) {
             return pelicularep.encontrarPorNombre(name);
 
-//        } else if (idGenero != null) {
-//            return pelicularep.peliculaGenero(idGenero);
+        } else if (genre != null) {
+            return pelicularep.peliculaGenero(genre);
         } else {
             return pelicularep.listarPelicula();
         }
         return null;
     }
-    
 
     @GetMapping("/{id}")
     public Pelicula getPelicula(@PathVariable Long id) throws IOException {
