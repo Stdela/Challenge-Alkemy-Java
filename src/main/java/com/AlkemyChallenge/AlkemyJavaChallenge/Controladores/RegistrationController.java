@@ -5,25 +5,20 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Controladores;
 
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Usuario;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.dtoClasses.UsuarioDTO;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Usuario;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Repositorios.UserRepositorio;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Servicios.MyUserDetailsService;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Servicios.SendEmail;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Servicios.UsuarioServicio;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -40,30 +35,23 @@ public class RegistrationController {
     MyUserDetailsService userdetails;
     @Autowired
     UsuarioServicio usuarioServicio;
-
-    @GetMapping("/auth/register")
-//    HttpServletRequest request,
-    public String usuario(@RequestBody Usuario usuario,  Errors errors) throws Exception {
-//         usuarioServicio.crearUsuario(usuariodto);
-//Usuario usuario = usuarioServicio.crearUsuario(usuariodto);
-          userdetails.loadUserByUsername(usuario.getUsername());
-        return "Success adding user";
-
-    }
+    @Autowired
+    SendEmail sendEmail;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @PostMapping("/auth/register")
-//    @RequestBody  Usuario usuario
-    public String crearUser(@RequestBody Usuario usuario) throws Exception {
-        
-//        usuarioServicio.crearUsuario(usuariodto);
-    userdetails.registrar(usuario);
-        return "Registrado";
+    public ResponseEntity<String> crearUser(@RequestBody Usuario usuario) throws IOException {
+        String correo = usuario.getEmail();
+        sendEmail.sendEmail(correo);
+        userdetails.registrar(usuario);
+        return ResponseEntity.ok().body("Usuario Creado");
     }
 
-    @GetMapping("/auth/login")
-    public String login(@RequestBody Usuario usuario) {
+    @PostMapping("/auth/login")
+    public ResponseEntity<String> login(@RequestBody Usuario usuario) {
         userdetails.loadUserByUsername(usuario.getUsername());
-        return "logeado";
+        return ResponseEntity.ok().body("Usuario logeado");
     }
 
 }

@@ -1,7 +1,9 @@
 package com.AlkemyChallenge.AlkemyJavaChallenge.Configuration;
 
+import com.AlkemyChallenge.AlkemyJavaChallenge.Filters.CustomAuthorizationFilter;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Filters.CustomAuthenticationFilter;
 import com.AlkemyChallenge.AlkemyJavaChallenge.Servicios.MyUserDetailsService;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,8 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -23,62 +23,52 @@ import org.springframework.stereotype.Component;
  */
 @Configuration
 @EnableWebSecurity
-//@ComponentScan
+@RequiredArgsConstructor
+@ComponentScan
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     MyUserDetailsService serviciousuario;
-    
 
-   
-
-//    @Autowired
-//    JwtRequestFilter jwtRequestFilter;
-//    @Autowired
-//    JwtUtil jwtUtil;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+        customAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+        http.
+                csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.csrf().disable();
-        http.headers().frameOptions().sameOrigin();
-        
-        
         http.authorizeRequests()
-                 .antMatchers("/auth/register/**").permitAll()
                 .antMatchers("/h2-console").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("auth/login/").permitAll()
+                .antMatchers("/auth/register/**").permitAll()
+                .antMatchers("auth/login/**").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/error/**").permitAll()
-                .anyRequest().hasAnyRole("USER");
-        http.formLogin().loginPage("/auth/register")
-                .loginProcessingUrl("auth/register")
-             .failureUrl("/login?error")
-                .successForwardUrl("/auth/login");
-
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+                .anyRequest().permitAll();
+                
+        http.addFilter(customAuthenticationFilter);
+        http.addFilterBefore(new CustomAuthorizationFilter(), CustomAuthenticationFilter.class);
 
     }
 
-    @Autowired
     @Override
-   
+//    @Bean
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(serviciousuario).passwordEncoder(passwordEncoder());
-//        
-//        auth.inMemoryAuthentication().withUser("Santiago").password(this.passwordEncoder().encode("hola")).roles("ADMIN");
-    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
-     
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

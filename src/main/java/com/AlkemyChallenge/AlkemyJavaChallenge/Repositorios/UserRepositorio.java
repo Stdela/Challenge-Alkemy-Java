@@ -5,8 +5,7 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Repositorios;
 
-
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Usuario;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,8 +13,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author delam
  */
 public interface UserRepositorio extends JpaRepository<Usuario, Long> {
+
     Usuario findByUsername(String username);
+
     Boolean existsByUsername(String username);
-Boolean existsByEmail(String email);    
+
+        Boolean existsByEmail(String email);
 
 }

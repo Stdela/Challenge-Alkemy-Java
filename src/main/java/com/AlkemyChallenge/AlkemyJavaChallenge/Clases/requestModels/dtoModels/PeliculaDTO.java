@@ -1,12 +1,10 @@
-
-package com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.dtoClasses;
+package com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.dtoModels;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +17,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PeliculaDTO {
+
+    @NotNull
+    
     private String imagen;
+    @NotNull
+    
     private String titulo;
-@JsonFormat
-      (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @NotNull
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date fechaCreacion;
 }

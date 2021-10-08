@@ -5,9 +5,9 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Servicios;
 
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Pelicula;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.PeliculaRequest;
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestClasses.updateClasses.updatePelicula;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Pelicula;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.PeliculaRequest;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.requestModels.updateModels.updatePelicula;
 import java.io.IOException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -5,7 +5,7 @@
  */
 package com.AlkemyChallenge.AlkemyJavaChallenge.Repositorios;
 
-import com.AlkemyChallenge.AlkemyJavaChallenge.Clases.Genero;
+import com.AlkemyChallenge.AlkemyJavaChallenge.Entidades.Genero;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

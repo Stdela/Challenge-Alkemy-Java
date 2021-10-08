@@ -1,5 +1,4 @@
-
-package com.AlkemyChallenge.AlkemyJavaChallenge.Clases;
+package com.AlkemyChallenge.AlkemyJavaChallenge.Entidades;
 
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
@@ -18,16 +17,17 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario extends AbstractPersistable<Long>{
-//@NotNull
-//@NotEmpty
-//@Email  
-private String email;
-//@NotNull
-//@NotEmpty
-private String username;
-//@NotNull
-//@NotEmpty
-private String password;
+public class Usuario extends AbstractPersistable<Long> {
+
+    @NotNull(message = "email can't be null")
+   
+    @Email
+    private String email;
+    @NotNull(message = " username can't be null")
+  
+    private String username;
+    @NotNull(message = "password can't be null")
+  
+    private String password;
 
 }
